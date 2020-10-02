@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'devza-assignment'`, () => {
+  it(`should have as title 'acceldata-assignment'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('devza-assignment');
+    expect(app.title).toEqual('acceldata-assignment');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('devza-assignment app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('acceldata-assignment app is running!');
   });
 });

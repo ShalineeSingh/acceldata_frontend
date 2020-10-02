@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-md-12 my-4 mx-4">
+    <button class="btn-sm btn-warning" type="button" (click)="goToOrders()">Go back</button>
+  </div>
+  <div class="col-md-4 mx-4">
+    <input type="text" class="form-control" aria-describedby="input" placeholder="Person name" [(ngModel)]="personName" name="name"
+      #name="ngModel" required>
+  </div>
+  <div class="col-md-2">
+    <button class="btn-sm btn-primary" type="button" placeholder="Search By Name" (click)="searchOrders()">Search</button>
+  </div>
+  <div class="list-container p-4 mt-4 col-md-6 mx-4" *ngIf="!page_loader">
+    <div class="row clearfix mb-4">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <tr>
+            <th>Name</th>
+            <th>Buns</th>
+            <th>Salad</th>
+            <th>Cheese Slices</th>
+            <th> Cutlets</th>
+            <th> Total</th>
+          </tr>
+          <tr *ngFor="let item of order_list; last as isLast">
+            <td>{{item.salesPerson}}</td>
+            <td>{{item.buns}}</td>
+            <td>{{item.salad}}</td>
+            <td>{{item.cheese}}</td>
+            <td>{{item.cutlets}}</td>
+            <td>Rs. {{item.price}}</td>
+          </tr>
+        </table>
+      </div>
+      <p *ngIf="personName && searched">Total sale by {{personName}} :Rs.{{total_price}} </p>
+    </div>
+  </div>
+</div>

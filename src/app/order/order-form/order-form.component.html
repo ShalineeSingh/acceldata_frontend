@@ -1,0 +1,113 @@
+<div class="row">
+  <div class="col-md-12">
+    <button class="btn-sm btn-warning float-right mt-4 my-4" type="button" (click)="goToList()">Go To List</button>
+  </div>
+  <div class="form-container p-4 mt-4 col-md-7">
+    <form #order_form="ngForm" (ngSubmit)="order_form.valid && submitForm()" autocomplete="off">
+      <div class="row">
+        <!-- Bun = 2 (fix price Rs 5 each bun) -->
+        <div class="col-sm-8 offset-md-1 mb-4">
+          <span>Bun : 2</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8 offset-md-1 mb-4">
+          <!-- salad = yes or no (price Rs 5) -->
+          <p class="mb-1">Salad</p>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="inlineRadio1" value="Yes" #salad="ngModel" name="salad" [(ngModel)]="selectedSalad">
+            <label class="form-check-label" for="inlineRadio1">Yes</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="inlineRadio2" value="No" #salad="ngModel" name="salad" [(ngModel)]="selectedSalad">
+            <label class="form-check-label" for="inlineRadio2">No</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8 offset-md-1 mb-4">
+          <!-- Cheese Slices = (Rs 1 per slice) -->
+          <p class="mb-1">Cheese Slices</p>
+          <ng-select name="cheese" [items]="numbers_list" [(ngModel)]="selectedCheese" [clearable]="false" #cheese="ngModel" [searchable]="false">
+            <ng-template class="tags-container" ng-label-tmp let-item="item" let-clear="clear">
+              <span [innerText]="item" class="tags-title"></span>
+            </ng-template>
+            <ng-template ng-option-tmp let-item="item">
+              <div class="option-container">
+                <span class="name" [innerHtml]="item" [title]="item"></span>
+              </div>
+            </ng-template>
+          </ng-select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8 offset-md-1 mb-4">
+          <!-- cutlets = (Rs 2 per piece) -->
+          <p class="mb-1">Cutlets</p>
+          <ng-select name="cutlets" [items]="numbers_list" [(ngModel)]="selectedCutlets" [clearable]="false" #cutlets="ngModel" [searchable]="false">
+            <ng-template class="tags-container" ng-label-tmp let-item="item" let-clear="clear">
+              <span [innerText]="item" class="tags-title"></span>
+            </ng-template>
+            <ng-template ng-option-tmp let-item="item">
+              <div class="option-container">
+                <span class="name" [innerHtml]="item" [title]="item"></span>
+              </div>
+            </ng-template>
+          </ng-select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8 offset-md-1 mb-4 form-group" [class.has-error]="((name.touched || name.dirty) && name.invalid) || (order_form.submitted && name.invalid)">
+          <label>
+            <span class="heading-6 text-muted">Person name</span>
+            <span class="text-danger">*</span>
+          </label>
+          <input type="text" class="form-control" aria-describedby="input" placeholder="Person name" [(ngModel)]="personName" name="name"
+            #name="ngModel" required>
+          <p class="help-block" *ngIf="((name.touched || name.dirty) && name.invalid) || (order_form.submitted && name.invalid)">
+            <span class="text-danger" *ngIf="name.errors.required">
+              <span [innerHtml]="'Person name is required'"></span>
+            </span>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="mx-auto">
+          <button type="submit" class="btn btn-primary submit-btn">
+            <i *ngIf="button_loader" class="fa fa-spinner fa-spin text-white"></i>
+            <span *ngIf="!button_loader">Add To Cart</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-5">
+    <h3 class="text-center">Cart</h3>
+    <div *ngFor="let item of cart_list; last as isLast">
+      <p class="mb-1">
+        <span>Buns :{{item.buns}} </span>
+        <span class="float-right font-lighter mr-4">Total : 5*2 = 10</span>
+      </p>
+      <p class="mb-1">Salad :{{item.salad}}
+        <span class="float-right font-lighter mr-4">Total : {{item.salad === "Yes" ? 5 : 0}}</span>
+      </p>
+      <p class="mb-1">Cheese Slices : {{item.cheese}}
+        <span class="float-right font-lighter mr-4">Total : {{item.cheese}} * 1 = {{item.cheese}}</span>
+      </p>
+      <p class="mb-3">Cutlets : {{item.cutlets}}
+        <span class="float-right font-lighter mr-4">Total : {{item.cutlets}} * 2 = {{item.cutlets * 2}}</span>
+      </p>
+      <p class="text-bold">TOTAL : Rs.{{item.price}}
+      </p>
+      <hr *ngIf="!isLast">
+    </div>
+    <div class="row" *ngIf="cart_list.length">
+      <div class="mx-auto">
+        <button type="button" class="btn btn-primary submit-btn" (click)="placeOrder()">
+          <i *ngIf="button_loader" class="fa fa-spinner fa-spin text-white"></i>
+          <span *ngIf="!button_loader">Place Order</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

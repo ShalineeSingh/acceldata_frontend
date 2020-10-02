@@ -1,25 +1,21 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { TaskListComponent } from "./task/task-list/task-list.component";
-import { TaskFormComponent } from "./task/task-form/task-form.component";
-import { TaskComponent } from "./task/task.component";
+import { OrderComponent } from "./order/order.component";
+import { OrderFormComponent } from "./order/order-form/order-form.component";
+import { OrderListComponent } from "./order-list/order-list.component";
 
 const routes: Routes = [
   {
     path: "",
-    component: TaskComponent,
+    component: OrderComponent,
     children: [
       {
         path: "",
-        component: TaskListComponent
+        component: OrderFormComponent
       },
       {
-        path: "form",
-        component: TaskFormComponent
-      },
-      {
-        path: ":id",
-        component: TaskFormComponent
+        path: "list",
+        component: OrderListComponent
       }
     ]
   }
@@ -29,4 +25,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
